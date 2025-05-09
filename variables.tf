@@ -13,3 +13,9 @@ variable "cluster_name" {
   description = "Nombre del cluster de Kubernetes"
   type        = string
 }
+
+variable "initial_node_count" {
+  description = "Cantidad de nodos iniciales"
+  type        = number
+  default     = 3
+}

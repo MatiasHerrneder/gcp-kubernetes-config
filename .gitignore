@@ -1,6 +1,12 @@
 backend-env.yaml
-auth.json
+
+# Terraform
+*.tfstate
+*.tfstate.*
 .terraform/
-*.lock.hcl
-terraform.tfstate
-terraform.tfstate.backup
+.crash/
+.terraform.lock.hcl
+
+# Credenciales sensibles
+credentials/*
+
