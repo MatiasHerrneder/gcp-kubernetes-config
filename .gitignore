@@ -1,5 +1,3 @@
-backend-env.yaml
-
 # Terraform
 *.tfstate
 *.tfstate.*
@@ -9,4 +7,6 @@ backend-env.yaml
 
 # Credenciales sensibles
 credentials/*
+*secret.yaml
 
+ignored/*
