@@ -45,7 +45,7 @@ terraform apply
 
 ### Conectarse al cluster creado
 ```
-gcloud container clusters get-credentials $(terraform output -raw cluster_name) --region $(terraform output -raw region) --project $(terraform output -raw project_id)
+gcloud container clusters get-credentials $(terraform output -raw cluster_name) --region $(terraform output -raw zone) --project $(terraform output -raw project_id)
 ```
 
 ### Verificar conexion
@@ -53,8 +53,25 @@ gcloud container clusters get-credentials $(terraform output -raw cluster_name) 
 kubectl get nodes
 ```
 
-### Despliegue de los nodos
+### Despliegue de los manifiestos
 En el directorio /manifests
 ```
-kubectl apply -f .
+kubectl apply -f . --recursive
 ```
+
+### Verificar pods
+```
+kubectl get pods -n myapp
+```
+
+### Conseguir IP del frontend para conectarse
+```
+kubectl get svc frontend -n myapp
+```
+Obtenemos algo como:
+
+| NAME      | TYPE          | CLUSTER-IP   | EXTERNAL-IP    | PORT(S)       | AGE
+|-----------|---------------|--------------|----------------|---------------|-----
+| frontend  | LoadBalancer  | 10.52.9.9    | 34.73.100.123  | 80:31709/TCP  | 84s
+
+> La ip sería: 34.73.100.123
