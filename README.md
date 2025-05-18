@@ -1,13 +1,13 @@
-# IMPORTANTE, siempre correr al finalizar
->terraform destroy
+# IMPORTANTE, no dejar el cluster prendido innecesariamente
+```
+terraform destroy
+```
 ##
-#### TODO:
-* Pasar a secrets las variables de entorno
 
 ## Uso de configuracion:
 
 ### Descargar gpc CLI
-> https://cloud.google.com/sdk/docs/install
+* https://cloud.google.com/sdk/docs/install
 
 ### Logearse con gcp e instalar plugins
 ```
@@ -18,20 +18,12 @@ gcloud components install gke-gcloud-auth-plugin
 ### Crear una cuenta de servicio para kubernetes
 * Crear una cuenta de servicio (con permisos o roles de: Kubernetes Engine Admin, Viewer), descargar la clave y ponerla en la carpeta credentials con el nombre auth.json
 
-##
-### Cambios de posibles de configuracion:
-* Modificar el archivo variables.tf para especificar los datos del proyecto
-
-* Modificar variables de entorno en backend-env.yaml
-
-* Modificar el path a la imagen en backend.yaml y frontend.yaml
-
-## Para cargar en docker hub las imagenes:
+## Imagenes cargadas en Docker Hub:
 ```
-docker tag TU_IMAGEN TU_USUARIO_DOCKER/mipla-backend:latest
-docker push TU_USUARIO_DOCKER/mipla-backend:latest
-docker tag TU_IMAGEN TU_USUARIO_DOCKER/mipla-frontend:latest
-docker push TU_USUARIO_DOCKER/mipla-frontend:latest
+docker tag matiasherrneder/mipla-backend:latest
+docker push matiasherrneder/mipla-backend:latest
+docker tag TU_IMAGEN matiasherrneder/mipla-frontend:latest
+docker push matiasherrneder/mipla-frontend:latest
 ```
 
 ## Comandos para levantar el cluster:
@@ -61,18 +53,8 @@ gcloud container clusters get-credentials $(terraform output -raw cluster_name) 
 kubectl get nodes
 ```
 
-### Despliegue de las aplicaciones
-primero ejecutar el de las variables de entorno
+### Despliegue de los nodos
+En el directorio /manifests
 ```
-kubectl apply -f backend-env.yaml
-kubectl apply -f frontend.yaml
-kubectl apply -f backend.yaml
-kubectl apply -f database.yaml
-```
-
-## Otros comandos
-```
-gcloud container clusters list --project=tu-proyecto-id
-kubectl get pods
-kubectl get services
+kubectl apply -f .
 ```
