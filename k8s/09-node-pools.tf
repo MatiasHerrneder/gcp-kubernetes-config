@@ -26,6 +26,8 @@ resource "google_container_node_pool" "general" {
       role = "general"
     }
 
+    tags = ["http-server", "https-server"]
+
     service_account = google_service_account.kubernetes.email
     oauth_scopes = [
       "https://www.googleapis.com/auth/cloud-platform"

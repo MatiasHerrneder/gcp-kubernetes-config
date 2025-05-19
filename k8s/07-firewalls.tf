@@ -10,3 +10,18 @@
 
 #   source_ranges = ["0.0.0.0/0"]
 # }
+
+resource "google_compute_firewall" "allow_http_https" {
+  name    = "allow-http-https"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443"]
+  }
+
+  direction     = "INGRESS"
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["http-server", "https-server"]
+  priority      = 1000
+}
