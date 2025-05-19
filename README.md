@@ -53,8 +53,17 @@ gcloud container clusters get-credentials $(terraform output -raw cluster_name) 
 kubectl get nodes
 ```
 
+### Agregar archivos necesarios para usar TLS
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.1/deploy/static/provider/cloud/deploy.yaml
+```
+```
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/latest/download/cert-manager.yaml
+```
+
 ### Despliegue de los manifiestos
 En el directorio /manifests
+
 ```
 kubectl apply -f . --recursive
 ```
@@ -66,12 +75,17 @@ kubectl get pods -n myapp
 
 ### Conseguir IP del frontend para conectarse
 ```
-kubectl get svc frontend -n myapp
+kubectl get ingress -n myapp
 ```
 Obtenemos algo como:
 
-| NAME      | TYPE          | CLUSTER-IP   | EXTERNAL-IP    | PORT(S)       | AGE
-|-----------|---------------|--------------|----------------|---------------|-----
-| frontend  | LoadBalancer  | 10.52.9.9    | 34.73.100.123  | 80:31709/TCP  | 84s
+| NAME | CLASS | HOSTS | ADDRESS | PORTS | AGE
+|-|-|-|-|-|-
+| frontend-ingress | <none> | miplasip.publicvm.com | 34.75.220.58 | 80, 443 | 8m13s
 
-> La ip sería: 34.73.100.123
+> La ip sería: 34.75.220.58
+
+### Configurar la ip en el DNS
+```
+https://miplasip.publicvm.com
+```
