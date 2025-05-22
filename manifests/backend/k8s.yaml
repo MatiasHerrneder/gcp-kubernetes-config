@@ -18,6 +18,7 @@ spec:
           image: matiasherrneder/mipla-backend:latest
           ports:
             - containerPort: 8002
+          imagePullPolicy: Always
           envFrom:
             - configMapRef:
                 name: backend-config
