@@ -15,8 +15,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: matiasherrneder/mipla-frontend:latest
+          image: matiasherrneder/mipla-frontend:1.10
           ports:
             - containerPort: 80
-          imagePullPolicy: Always
 
